@@ -1,2 +1,7 @@
+import random 
+
 print("Beginning game...")
-print("You lose! Try again.")
+if random.randint(0,9) == 9:
+    print("Through sheer will, you managed to win.")
+else :
+	print("You lose! Try again.")
