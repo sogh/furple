@@ -2,8 +2,8 @@ import random
 
 print("Beginning game...")
 print("You wake up to find yourself in the middle of dirt road, you walk straight for a few mins and see a fork in the road.")
-print("The left path is very foggy and you cannot see father then a few feet")
-print("The right path is blocked with thick veins but you might be able to sqeeze in")
+print("The left path is very foggy and you cannot see farther then a few feet")
+print("The right path is blocked with thick vines but you might be able to squeeze in")
 
 if random.randint(1,2) == 1 :
     deadlypath = "left"
