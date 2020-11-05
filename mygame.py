@@ -22,7 +22,9 @@ while True:
         print(f"{direction} is not a direction you can go to, please choose left or right")
 
 if deadlypath == direction.lower():
-    print(f"You go {direction} and hear a hissing sound, looks like you stepped on a snake's tail")
+#   direction statement is redundant!
+#    print(f"You go {direction} and hear a hissing sound, looks like you stepped on a snake's tail")
+    print("You hear a hissing sound, looks like you stepped on a snake's tail")
     print("The snake bites you and you die")
     print("Game over.")
 else :
