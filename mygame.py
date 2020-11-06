@@ -1,7 +1,9 @@
 import random
+import player_lib
 
 print("Beginning game...")
-print("You wake up to find yourself in the middle of dirt road, you walk straight for a few mins and see a fork in the road.")
+player1 = player_lib.Player()
+print(f"You wake up to find yourself in the middle of dirt road, you walk straight for a few mins and see a fork in the road. Position: {player1.position.toString()}")
 print("The left path is very foggy and you cannot see farther then a few feet")
 print("The right path is blocked with thick vines but you might be able to squeeze in")
 
@@ -20,10 +22,9 @@ while True:
         break
     else :
         print(f"{direction} is not a direction you can go to, please choose left or right")
-
+# player1.step(direction)
+print(f"Position: {player1.position.toString()}")
 if deadlypath == direction.lower():
-#   direction statement is redundant!
-#    print(f"You go {direction} and hear a hissing sound, looks like you stepped on a snake's tail")
     print("You hear a hissing sound, looks like you stepped on a snake's tail")
     print("The snake bites you and you die")
     print("Game over.")
