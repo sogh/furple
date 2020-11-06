@@ -1,8 +1,9 @@
 import random
-import player
+
+from engine.player import Player
 
 print("Beginning game...")
-player1 = player.Player()
+player1 = Player()
 print(f"You wake up to find yourself in the middle of dirt road, you walk straight for a few mins and see a fork in the road. Position: {player1.position.toString()}")
 print("The left path is very foggy and you cannot see farther then a few feet")
 print("The right path is blocked with thick vines but you might be able to squeeze in")
