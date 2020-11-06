@@ -1,8 +1,8 @@
-import point_lib
+import point
 
 class Player:
     def __init__(self):
-        self.__position = point_lib.Point(0,0)
+        self.__position = point.Point(0,0)
 
     @property
     def position(self):
