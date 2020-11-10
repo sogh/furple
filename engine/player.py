@@ -7,6 +7,3 @@ class Player:
     @property
     def position(self):
         return self.__position
-
-    def change_position_weird(self):
-        self.__position.x = 13
