@@ -7,3 +7,6 @@ class Player:
     @property
     def position(self):
         return self.__position
+
+    def wacky_move(self):
+        self.__position.x = self.__position.x + 1
