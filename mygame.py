@@ -23,7 +23,7 @@ while True:
         break
     else :
         print(f"{direction} is not a direction you can go to, please choose left or right")
-# player1.step(direction)
+player1.change_position_weird()
 print(f"Position: {player1.position.toString()}")
 if deadlypath == direction.lower():
     print("You hear a hissing sound, looks like you stepped on a snake's tail")
