@@ -49,7 +49,8 @@ while True:
     lowdir = direction.lower()
     # Call player1.move and modify player's coordinates according to given direction
     # Here's an example function doing it wrong--
-    player1.wacky_move()
+    # player1.wacky_move()
+    player1.move(lowdir)
     if lowdir in dirs:
         dirs[lowdir](lowdir)
     else:
