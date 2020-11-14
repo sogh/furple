@@ -1,2 +1,2 @@
 # furple
-Repo for simply python game experiments
+Repo for simple python game experiments
