@@ -2,6 +2,16 @@ import random, sys
 
 from engine.player import Player
 
+info_commands = ['help', 'info']
+player_move_commands = [
+    'north', 'south', 'east', 'west',
+    'n','s','e','w']
+jester_commands = ['killjester', 'kill jester']
+fart_commands = ['fart']
+
+all_commands = info_commands + player_move_commands + jester_commands + fart_commands
+
+
 print("Beginning game...")
 player1 = Player()
 print(f"You wake up to find yourself in the middle of dirt road, you walk straight for a few mins and see a fork in the road. Position: {player1.position.toString()}")
@@ -36,22 +46,21 @@ dirs = {
     "kill jester": killjester,
     "killjester": killjester,
 }
-if random.randint(1,2) == 1 :
-    dirs["left"] = deadlypath
-    dirs["right"] = winpath
-else :
-    dirs["right"] = deadlypath
-    dirs["left"] = winpath
 
 while True:
     print(f"Position: {player1.position.toString()}")
-    direction = input("Do you want to go left or right? :")
-    lowdir = direction.lower()
-    # Call player1.move and modify player's coordinates according to given direction
-    # Here's an example function doing it wrong--
-    # player1.wacky_move()
-    player1.move(lowdir)
-    if lowdir in dirs:
-        dirs[lowdir](lowdir)
+    print("Move commands: n,s,e,w")
+    # print(worldmap.GetLocationDescription(player1.position))
+    cmd = input("Enter command :")
+    lowcmd = cmd.lower()
+    if lowcmd in player_move_commands:
+        player1.move(lowcmd)
+    elif lowcmd in jester_commands:
+        dirs[lowcmd](lowcmd)
+    elif lowcmd in info_commands:
+        print("All possible commands:")
+        print(all_commands)
+    elif lowcmd in fart_commands:
+        print("You fart. It smells.")
     else:
-        print(f"{direction} is not a direction you can go to, please choose left or right")
+        print(f"{cmd} is not a valid command.")
