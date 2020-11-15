@@ -1,6 +1,8 @@
 import random, sys
 
 from engine.player import Player
+from engine.simulation import Simulation
+from engine.sunmoon import SunMoon
 from mapfactory import GENERATE_PHEZYGG_WORLD
 
 info_commands = ['help', 'info']
@@ -13,26 +15,42 @@ quit_commands = ['quit']
 all_commands = info_commands + player_move_commands + fart_commands + quit_commands
 
 worldmap = GENERATE_PHEZYGG_WORLD()
-
+sim = Simulation()
 print("Beginning game...")
 player1 = Player()
+sim.AddUpdateable(player1)
+sun = SunMoon()
+sim.AddUpdateable(sun)
 
+# Every game loop, add things to be rendered/printed to this list.
+render_list = []
 # Main game loop
-
 while True:
-    print(f"Position: {player1.position.toString()}")
-    print("Move commands: n,s,e,w")
-    print(worldmap.GetLocationDescription(player1.position.x, player1.position.y))
-    cmd = input("Enter command :")
+    render_list.append(f"Position: {player1.position.toString()}")
+    render_list.append("Move commands: n,s,e,w")
+    render_list.append(sun.toString())
+    render_list.append(worldmap.GetLocationDescription(player1.position.x, player1.position.y))
+    render_list.append(player1.PlayerStatus())
+    
+    for r in render_list:
+        # Fancy renderer, ray tracing coming soon.
+        print(r)
+    render_list = []        
+    
+    # Every Loop execute one simulation tick.
+    sim.Update()
+
+    # Take player input
+    cmd = input("Enter command: ")
     lowcmd = cmd.lower()
     if lowcmd in player_move_commands:
         player1.move(lowcmd)
     elif lowcmd in info_commands:
-        print("All possible commands:")
-        print(all_commands)
+        render_list.append("All possible commands:")
+        render_list.append(all_commands)
     elif lowcmd in fart_commands:
-        print("You fart. It smells.")
+        render_list.append("You fart. It smells.")
     elif lowcmd in quit_commands:
         break
     else:
-        print(f"{cmd} is not a valid command.")
+        render_list.append(f"{cmd} is not a valid command.")
