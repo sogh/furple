@@ -47,10 +47,56 @@ dirs = {
     "killjester": killjester,
 }
 
+# dict of dicts stores info for coordinates
+player_location = {
+    '(0,0)': {
+        'location_name': 'start',
+        'location_flavor': 'Its the start.',
+    },
+    '(0,1)': {
+        'location_name': 'pforest',
+        'location_flavor': 'Its a forest of penises, you need to get out of here, if only you could stop tripping ass-first.',
+    },
+    '(1,1)': {
+        'location_name': 'forest',
+        'location_flavor': 'Its a forest, you could see it better if not for all these damn trees.',
+    },
+    '(-1,1)': {
+        'location_name': 'mforest',
+        'location_flavor': 'Its a forest of mushrooms.',
+    },
+    '(1,0)': {
+        'location_name': 'market',
+        'location_flavor': 'An ancient market destroyed by nuclear fire, the diminutive shadows on the wall bring a tear to your eye.',
+    },
+    '(-1,0)': {
+        'location_name': 'cave',
+        'location_flavor': 'A deep cave.',
+    },
+    '(0,-1)': {
+        'location_name': 'dessert',
+        'location_flavor': 'An endless dessert, it looks delicious.',
+    },
+    '(1,-1)': {
+        'location_name': 'desert',
+        'location_flavor': 'Its a desert, the cake turns to sand in your mouth.',
+    },
+    '(-1,-1)': {
+        'location_name': 'dessertdesert',
+        'location_flavor': 'There seems to be nothing here.',
+    },
+}
+
 while True:
     print(f"Position: {player1.position.toString()}")
     print("Move commands: n,s,e,w")
     # print(worldmap.GetLocationDescription(player1.position))
+    if player1.position.toString() in player_location.keys():
+        #prints the location flavor text if it exists
+        current_location = player_location[player1.position.toString()]
+        print(current_location['location_flavor'])
+    else:
+        print("Youre off the grid man!")
     cmd = input("Enter command :")
     lowcmd = cmd.lower()
     if lowcmd in player_move_commands:
