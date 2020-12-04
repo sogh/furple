@@ -19,7 +19,6 @@ class MapTile:
         self.name = name
         self.description = description
         self.local_items = []
-        self.item_descriptions = []
 
     def toString(self):
         return self.name + "\n" + self.description
@@ -28,9 +27,7 @@ class MapTile:
         self.local_items.append(new_item)
 
     def reveal_items(self):
-        for thing in self.local_items:
-            self.item_descriptions.append(thing.description)
-        return self.item_descriptions
+        return [thing.description for thing in self.local_items]
 
     
 

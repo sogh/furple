@@ -13,7 +13,7 @@ fart_commands = ['fart']
 look_commands = ['look', 'search', 'investigate']
 quit_commands = ['quit']
 
-all_commands = info_commands + player_move_commands + fart_commands + quit_commands
+all_commands = info_commands + player_move_commands + fart_commands + quit_commands + look_commands
 
 worldmap = GENERATE_PHEZYGG_WORLD()
 sim = Simulation()
