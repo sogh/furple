@@ -38,4 +38,4 @@ def GENERATE_PHEZYGG_WORLD():
         MapTile('dessertdesert', 
                 'There seems to be nothing here.',
                 [MapTileTag.DESSERT, MapTileTag.DESERT]))
-    return phezygg_world
+    return phezygg_world    

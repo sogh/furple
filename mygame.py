@@ -10,6 +10,7 @@ player_move_commands = [
     'north', 'south', 'east', 'west',
     'n','s','e','w']
 fart_commands = ['fart']
+look_commands = ['look', 'search', 'investigate']
 quit_commands = ['quit']
 
 all_commands = info_commands + player_move_commands + fart_commands + quit_commands
@@ -52,5 +53,9 @@ while True:
         render_list.append("You fart. It smells.")
     elif lowcmd in quit_commands:
         break
+    elif lowcmd in look_commands:
+        item_list_local = worldmap.GetItemDescriptions(player1.position.x,player1.position.y)
+        for item in item_list_local:
+            render_list.append(f"You see a {item}.")
     else:
         render_list.append(f"{cmd} is not a valid command.")
