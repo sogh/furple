@@ -1,4 +1,5 @@
 from enum import Enum
+from engine.detritus import Detritus
 
 class MapTileTag(Enum):
     PLAINS = 0
@@ -17,9 +18,19 @@ class MapTile:
         self.tags = taglist
         self.name = name
         self.description = description
+        self.local_items = []
 
     def toString(self):
         return self.name + "\n" + self.description
+
+    def add_item(self, new_item):
+        self.local_items.append(new_item)
+
+    def reveal_items(self):
+        return [thing.description for thing in self.local_items]
+
+    
+
 
 class WorldMap:
     """ Constructor takes starting and ending coordinates to generate an initial map."""
@@ -37,3 +48,9 @@ class WorldMap:
 
     def GetLocationDescription(self, x, y):
         return self.map[x][y].toString()
+
+    def AddItemAt(self, x, y, item_description):
+        self.map[x][y].add_item(Detritus(item_description.lower()))
+    
+    def GetItemDescriptions(self, x, y):
+        return self.map[x][y].reveal_items()
