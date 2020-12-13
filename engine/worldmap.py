@@ -29,8 +29,6 @@ class MapTile:
     def reveal_items(self):
         return [thing.description for thing in self.local_items]
 
-    
-
 
 class WorldMap:
     """ Constructor takes starting and ending coordinates to generate an initial map."""
