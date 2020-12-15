@@ -1,5 +1,6 @@
 from enum import Enum
 from engine.detritus import Detritus
+from engine.npc import NPC
 
 class MapTileTag(Enum):
     PLAINS = 0
@@ -19,6 +20,7 @@ class MapTile:
         self.name = name
         self.description = description
         self.local_items = []
+        self.local_npcs = []
 
     def toString(self):
         return self.name + "\n" + self.description
@@ -28,6 +30,15 @@ class MapTile:
 
     def reveal_items(self):
         return [thing.description for thing in self.local_items]
+
+    def add_npc(self, new_npc):
+        self.local_npcs.append(new_npc)
+    
+    def reveal_npcs(self):
+        return[npc.recall_name() for npc in self.local_npcs]
+    
+    def greet_npcs(self):
+        return[npc.greet() for npc in self.local_npcs]
 
 
 class WorldMap:
@@ -52,3 +63,12 @@ class WorldMap:
     
     def GetItemDescriptions(self, x, y):
         return self.map[x][y].reveal_items()
+
+    def AddNPCAt(self, x, y):
+        self.map[x][y].add_npc(NPC(x, y))
+
+    def GetNPCDescriptions(self, x, y):
+        return self.map[x][y].reveal_npcs()
+
+    def greetnpcs(self, x, y):
+        return self.map[x][y].greet_npcs()
