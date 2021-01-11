@@ -1,8 +1,8 @@
 import unittest
-from point import Point
+from engine.point import Point
 
 class PointTest(unittest.TestCase):
-    def testX(self):
+    def testXY(self):
         p = Point(3, 7)
         self.assertEqual(p.x, 3)
         self.assertEqual(p.y, 7)
