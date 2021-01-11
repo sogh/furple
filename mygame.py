@@ -1,10 +1,8 @@
-import random, sys
+import random, sys, initialize
 
 from engine.player import Player
 from engine.simulation import Simulation
 from engine.sunmoon import SunMoon
-from mapfactory import GENERATE_PHEZYGG_WORLD
-from itemfactory import initial_item_populate
 
 info_commands = ['help', 'info']
 player_move_commands = [
@@ -12,18 +10,20 @@ player_move_commands = [
     'n','s','e','w']
 fart_commands = ['fart']
 look_commands = ['look', 'search', 'investigate']
+npc_commands = ['greet']
 quit_commands = ['quit']
 
-all_commands = info_commands + player_move_commands + fart_commands + quit_commands + look_commands
+all_commands = info_commands + player_move_commands + fart_commands + quit_commands + look_commands + npc_commands
 
-worldmap = GENERATE_PHEZYGG_WORLD()
+worldmap = initialize.GENERATE_PHEZYGG_WORLD()
 sim = Simulation()
 print("Beginning game...")
 player1 = Player()
 sim.AddUpdateable(player1)
 sun = SunMoon()
 sim.AddUpdateable(sun)
-initial_item_populate(worldmap)
+initialize.initial_item_populate(worldmap)
+initialize.initial_npc_populate(worldmap)
 
 # Every game loop, add things to be rendered/printed to this list.
 render_list = []
@@ -56,8 +56,14 @@ while True:
     elif lowcmd in quit_commands:
         break
     elif lowcmd in look_commands:
-        item_list_local = worldmap.GetItemDescriptions(player1.position.x,player1.position.y)
+        item_list_local = worldmap.GetItemDescriptions(player1.position.x, player1.position.y)
         for item in item_list_local:
             render_list.append(f"You see {item}.")
+        #npc_list_local = 
+        for npc in worldmap.GetNPCDescriptions(player1.position.x, player1.position.y):
+            render_list.append(f"You see {npc.title()}.")
+    elif lowcmd in npc_commands:
+        for greeting in worldmap.greetnpcs(player1.position.x, player1.position.y):
+            render_list.append(greeting)
     else:
         render_list.append(f"{cmd} is not a valid command.")

@@ -34,4 +34,4 @@ class Player:
         elif direction.lower() == 'west' or direction.lower() == 'w':
             self.__position.x = self.__position.x - 1
         else:
-            print('SPEAK ENGLISH')
+            print('Invalid Direction')
