@@ -1,0 +1,40 @@
+import unittest
+
+from engine.player import Player
+
+class PlayerTestCase(unittest.TestCase):
+    """Tests Player class and functions."""
+
+    def setUp(self):
+        """Create a Player for use in testing."""
+        self.player1 = Player()
+
+    def test_move(self):
+        """Test player position and movement."""
+        # Check default x position
+        self.assertEqual(self.player1.position.x, 0)
+        # Check default y position
+        self.assertEqual(self.player1.position.y, 0)
+        # Check the different move directions and the resulting position change
+        self.player1.move('n')
+        self.assertEqual(self.player1.position.y, 1)
+        self.player1.move('s')
+        self.assertEqual(self.player1.position.y, 0)
+        self.player1.move('e')
+        self.assertEqual(self.player1.position.x, 1)
+        self.player1.move('w')
+        self.assertEqual(self.player1.position.x, 0)
+
+    def test_status(self):
+        """Test player hunger level and update."""
+        # Check initial hunger
+        self.assertEqual(self.player1.PlayerStatus(), 'You feel content.')
+        self.assertEqual(self.player1.hunger, 0)
+        for _ in range(0,4):
+            self.player1.Update(4)
+        self.assertEqual(self.player1.hunger, 4)
+        self.assertEqual(self.player1.PlayerStatus(), 'You are hungry.')
+
+
+if __name__ == '__main__':
+    unittest.main()
