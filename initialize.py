@@ -40,6 +40,8 @@ def GENERATE_PHEZYGG_WORLD():
         MapTile('dessertdesert', 
                 'There seems to be nothing here.',
                 [MapTileTag.DESSERT, MapTileTag.DESERT]))
+    initial_item_populate(phezygg_world)
+    initial_npc_populate(phezygg_world)
     return phezygg_world
 
 def initial_item_populate(new_world, north_limit = 1, south_limit = -1, east_limit = 1, west_limit = -1):
