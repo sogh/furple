@@ -1,69 +1,96 @@
 import random, sys, initialize
+from collections import deque
 
 from engine.player import Player
 from engine.simulation import Simulation
 from engine.sunmoon import SunMoon
+from engine.graphics import Graphics
 
-info_commands = ['help', 'info']
-player_move_commands = [
-    'north', 'south', 'east', 'west',
-    'n','s','e','w']
-fart_commands = ['fart']
-look_commands = ['look', 'search', 'investigate']
-npc_commands = ['greet']
-quit_commands = ['quit']
+class MyGame:
+    def __init__(self, worldmap=initialize.GENERATE_PHEZYGG_WORLD(), sim=Simulation(), player1=Player(), graphics=Graphics(), sun=SunMoon()):
+        self.info_commands = ['help', 'info']
+        self.player_move_commands = [
+            'north', 'south', 'east', 'west',
+            'n','s','e','w']
+        self.fart_commands = ['fart']
+        self.look_commands = ['look', 'search', 'investigate']
+        self.npc_commands = ['greet']
+        self.quit_commands = ['quit']
+        self.nothing_commands = ['wait', 'nothing']
 
-all_commands = info_commands + player_move_commands + fart_commands + quit_commands + look_commands + npc_commands
+        self.all_commands = (self.info_commands + self.player_move_commands
+            + self.fart_commands + self.quit_commands + self.look_commands 
+            + self.npc_commands + self.nothing_commands)
 
-worldmap = initialize.GENERATE_PHEZYGG_WORLD()
-sim = Simulation()
-print("Beginning game...")
-player1 = Player()
-sim.AddUpdateable(player1)
-sun = SunMoon()
-sim.AddUpdateable(sun)
-initialize.initial_item_populate(worldmap)
-initialize.initial_npc_populate(worldmap)
+        self.worldmap = worldmap
+        self.sim = sim
+        print("Beginning game...")
+        self.player1 = player1
+        self.sim.AddUpdateable(self.player1)
+        self.sun = sun
+        self.sim.AddUpdateable(self.sun)
 
-# Every game loop, add things to be rendered/printed to this list.
-render_list = []
-# Main game loop
-while True:
-    render_list.append(f"Position: {player1.position.toString()}")
-    render_list.append("Move commands: n,s,e,w")
-    render_list.append(sun.toString())
-    render_list.append(worldmap.GetLocationDescription(player1.position.x, player1.position.y))
-    render_list.append(player1.PlayerStatus())
-    
-    for r in render_list:
-        # Fancy renderer, ray tracing coming soon.
-        print(r)
-    render_list = []        
-    
-    # Every Loop execute one simulation tick.
-    sim.Update()
+        # Every game loop, add things to be rendered/printed to this list.
+        self.render_list = []
+        # Every game loop, update our input queue to process player input.
+        # In normal operation, there will only be one entry in the queue. However, this
+        # enables us to insert commands in the queue for testing purposes.
+        self.input_queue = deque()
 
-    # Take player input
-    cmd = input("Enter command: ")
-    lowcmd = cmd.lower()
-    if lowcmd in player_move_commands:
-        player1.move(lowcmd)
-    elif lowcmd in info_commands:
-        render_list.append("All possible commands:")
-        render_list.append(all_commands)
-    elif lowcmd in fart_commands:
-        render_list.append("You fart. It smells.")
-    elif lowcmd in quit_commands:
-        break
-    elif lowcmd in look_commands:
-        item_list_local = worldmap.GetItemDescriptions(player1.position.x, player1.position.y)
-        for item in item_list_local:
-            render_list.append(f"You see {item}.")
-        #npc_list_local = 
-        for npc in worldmap.GetNPCDescriptions(player1.position.x, player1.position.y):
-            render_list.append(f"You see {npc.title()}.")
-    elif lowcmd in npc_commands:
-        for greeting in worldmap.greetnpcs(player1.position.x, player1.position.y):
-            render_list.append(greeting)
-    else:
-        render_list.append(f"{cmd} is not a valid command.")
+        self.graphics = graphics
+
+
+    def Step(self):
+        # Every Loop execute one simulation tick.
+        self.sim.Update()
+
+        # Take player input
+        if len(self.input_queue) > 0:
+            cmd = self.input_queue.popleft()
+            lowcmd = cmd.lower()
+            if lowcmd in self.player_move_commands:
+                self.player1.move(lowcmd)
+            elif lowcmd in self.info_commands:
+                self.graphics.RenderText("All possible commands:")
+                self.graphics.RenderText(self.all_commands)
+            elif lowcmd in self.fart_commands:
+                self.graphics.RenderText("You fart. It smells.")
+            elif lowcmd in self.quit_commands:
+                return False
+            elif lowcmd in self.look_commands:
+                item_list_local = self.worldmap.GetItemDescriptions(self.player1.position.x, self.player1.position.y)
+                for item in item_list_local:
+                    self.graphics.RenderText(f"You see {item}.")
+                #npc_list_local = 
+                for npc in self.worldmap.GetNPCDescriptions(self.player1.position.x, self.player1.position.y):
+                    self.graphics.RenderText(f"You see {npc.title()}.")
+            elif lowcmd in self.npc_commands:
+                for greeting in self.worldmap.greetnpcs(self.player1.position.x, self.player1.position.y):
+                    self.graphics.RenderText(greeting)
+            elif lowcmd in self.nothing_commands:
+                pass
+            else:
+                self.graphics.RenderText(f"{cmd} is not a valid command.")
+        
+        self.graphics.RenderText(f"Position: {self.player1.position.toString()}")
+        self.graphics.RenderText("Move commands: n,s,e,w")
+        self.graphics.RenderText(self.sun.toString())
+        self.graphics.RenderText(self.worldmap.GetLocationDescription(self.player1.position.x, self.player1.position.y))
+        self.graphics.RenderText(self.player1.PlayerStatus())
+
+
+        # Render all the graphics
+        self.graphics.Render()
+
+        return True
+
+
+    def Run(self):
+        # Main game loop
+        while self.Step():
+            self.input_queue.appendleft(input("Enter command: "))
+
+
+if __name__ == '__main__':
+    game = MyGame()
+    game.Run()
