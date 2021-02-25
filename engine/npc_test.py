@@ -22,6 +22,7 @@ class NPCTestCase(unittest.TestCase):
     def test_npc_position(self):
         """Test NPC positioning."""
         self.assertEqual(self.test_npc.position.x, 1)
+        self.assertEqual(self.test_npc.position.y, -1)
 
 if __name__ == '__main__':
     unittest.main()
