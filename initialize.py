@@ -53,6 +53,9 @@ def initial_item_populate(new_world, north_limit = 1, south_limit = -1, east_lim
 
 def initial_npc_populate(new_world, north_limit = 1, south_limit = -1, east_limit = 1, west_limit = -1):
     max_initial_npc = 4
+    possible_names = ['steve', 'mark', 'jill', 'edna']
 
     for _ in range(randint(1,max_initial_npc)):
-        new_world.AddNPCAt(choice(list(range(west_limit, east_limit + 1))), choice(list(range(south_limit, north_limit + 1))))
+        npc_name = choice(possible_names)
+        possible_names.remove(npc_name)
+        new_world.AddNPCAt(choice(list(range(west_limit, east_limit + 1))), choice(list(range(south_limit, north_limit + 1))), npc_name)

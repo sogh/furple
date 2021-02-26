@@ -25,6 +25,10 @@ class MyGameTest(unittest.TestCase):
 
         self.worldmap.AddItemAt(0, 1, 'Test Item')
 
+        # Create Test NPC
+        self.worldmap.AddNPCAt(1, 0, 'roger')
+        self.worldmap.AddNPCAt(1, 0, 'bob')
+
         self.game = MyGame(worldmap=self.worldmap,sim=self.sim,
             player1=self.player,graphics=self.g, sun=self.sun)
     
@@ -39,6 +43,12 @@ class MyGameTest(unittest.TestCase):
         # Verify player moved
         self.assertEqual(self.player.position.x, 1)
         self.assertEqual(self.player.position.y, 0)
+
+    def test_NPCTests(self):
+        """Tests for NPC Class."""
+        self.assertIn('roger', self.worldmap.GetNPCDescriptions(1,0))
+        self.assertIn('bob', self.worldmap.GetNPCDescriptions(1,0))
+
 
 
 if __name__ == '__main__':

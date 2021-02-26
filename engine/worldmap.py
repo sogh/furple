@@ -64,8 +64,8 @@ class WorldMap:
     def GetItemDescriptions(self, x, y):
         return self.map[x][y].reveal_items()
 
-    def AddNPCAt(self, x, y):
-        self.map[x][y].add_npc(NPC(x, y))
+    def AddNPCAt(self, x, y, npc_name):
+        self.map[x][y].add_npc(NPC(x, y, npc_name))
 
     def GetNPCDescriptions(self, x, y):
         return self.map[x][y].reveal_npcs()
