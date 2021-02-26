@@ -11,7 +11,7 @@ class WorldMapTest(unittest.TestCase):
         self.test_worldmap = WorldMap(-3, -3, 3, 3)
         self.test_worldmap.AddItemAt(1, 0, self.test_detritus_description)
         self.test_worldmap.SetMapTile(0, 0, self.test_tile)
-        self.test_worldmap.AddNPCAt(1, 1)
+        self.test_worldmap.AddNPCAt(1, 1, 'testnpcname')
 
     def testLocationDescription(self):
         self.assertEqual(self.test_tile.toString(), self.test_worldmap.GetLocationDescription(0,0))
