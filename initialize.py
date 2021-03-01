@@ -1,8 +1,8 @@
 """This module initializes map, items, and npcs."""
 from random import randint, choice
 from engine.worldmap import WorldMap
-from engine.worldmap import MapTile
-from engine.worldmap import MapTileTag
+from engine.maptile import MapTile
+from engine.maptile import MapTileTag
 
 def GENERATE_PHEZYGG_WORLD():
     phezygg_world = WorldMap(-25, -25, 25, 25)

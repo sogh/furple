@@ -4,7 +4,8 @@ from engine.player  import Player
 from engine.simulation import Simulation
 from engine.graphics import Graphics
 from engine.sunmoon import SunMoon
-from engine.worldmap import WorldMap, MapTile, MapTileTag
+from engine.worldmap import WorldMap
+from engine.maptile import MapTile, MapTileTag
 
 
 class MyGameTest(unittest.TestCase):
