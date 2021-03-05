@@ -4,6 +4,7 @@ class Player:
     def __init__(self):
         self.__position = Point(0,0)
         self.hunger = 0
+        self.inventory = []
 
     @property
     def position(self):
@@ -35,3 +36,9 @@ class Player:
             self.__position.x = self.__position.x - 1
         else:
             print('Invalid Direction')
+
+    def additemtoinv(self, new_item):
+        self.inventory.append(new_item)
+
+    def displayinv(self):
+        return [item.description for item in self.inventory]

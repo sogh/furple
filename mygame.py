@@ -17,10 +17,13 @@ class MyGame:
         self.npc_commands = ['greet']
         self.quit_commands = ['quit']
         self.nothing_commands = ['wait', 'nothing']
+        self.item_commands = ['pickup', 'get', 'take']
+        self.inventory_commands = ['inventory']
 
         self.all_commands = (self.info_commands + self.player_move_commands
             + self.fart_commands + self.quit_commands + self.look_commands 
-            + self.npc_commands + self.nothing_commands)
+            + self.npc_commands + self.nothing_commands + self.item_commands
+            + self.inventory_commands)
 
         self.worldmap = worldmap
         self.sim = sim
@@ -67,6 +70,16 @@ class MyGame:
             elif lowcmd in self.npc_commands:
                 for greeting in self.worldmap.greetnpcs(self.player1.position.x, self.player1.position.y):
                     self.graphics.RenderText(greeting)
+            elif lowcmd in self.item_commands:
+                item_get = input("What will you pick up?")
+                item = self.worldmap.pickupitems(self.player1.position.x, self.player1.position.y, item_get)
+                if item == "You cannot get that.":
+                    print("You cannot get that.")
+                else:
+                    self.player1.additemtoinv(item)
+            elif lowcmd in self.inventory_commands:
+                for item in self.player1.displayinv():
+                    self.graphics.RenderText(item)              
             elif lowcmd in self.nothing_commands:
                 pass
             else:

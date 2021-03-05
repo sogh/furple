@@ -38,3 +38,11 @@ class MapTile:
     
     def greet_npcs(self):
         return [npc.greet() for npc in self.local_npcs]
+
+    def pickupitem(self, description):
+        item_index = 0
+        for item in self.local_items:
+            if item.description == description:
+                return self.local_items.pop(item_index)
+            item_index += 1
+        return "You cannot get that."
