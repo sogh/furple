@@ -37,8 +37,8 @@ class Player:
         else:
             print('Invalid Direction')
 
-    def additemtoinv(self, new_item):
+    def add_item_to_inv(self, new_item):
         self.inventory.append(new_item)
 
-    def displayinv(self):
+    def display_inv(self):
         return [item.description for item in self.inventory]

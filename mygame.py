@@ -72,13 +72,13 @@ class MyGame:
                     self.graphics.RenderText(greeting)
             elif lowcmd in self.item_commands:
                 item_get = input("What will you pick up?")
-                item = self.worldmap.pickupitems(self.player1.position.x, self.player1.position.y, item_get)
-                if item == "You cannot get that.":
-                    print("You cannot get that.")
+                item = self.worldmap.pickup_items(self.player1.position.x, self.player1.position.y, item_get)
+                if item:
+                    self.player1.add_item_to_inv(item)
                 else:
-                    self.player1.additemtoinv(item)
+                    print("You cannot get that.")
             elif lowcmd in self.inventory_commands:
-                for item in self.player1.displayinv():
+                for item in self.player1.display_inv():
                     self.graphics.RenderText(item)              
             elif lowcmd in self.nothing_commands:
                 pass

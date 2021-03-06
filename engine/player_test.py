@@ -39,9 +39,9 @@ class PlayerTestCase(unittest.TestCase):
 
     def test_inventory(self):
         """Test inventory."""
-        self.player1.additemtoinv(self.testitem)
+        self.player1.add_item_to_inv(self.testitem)
         self.assertIn(self.testitem, self.player1.inventory)
-        self.assertEqual(self.player1.displayinv(),["A ROCK"])
+        self.assertEqual(self.player1.display_inv(),["A ROCK"])
 
 
 

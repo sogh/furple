@@ -35,5 +35,5 @@ class WorldMap:
     def greetnpcs(self, x, y):
         return self.map[x][y].greet_npcs()
     
-    def pickupitems(self, x, y, description):
-        return self.map[x][y].pickupitem(description)
+    def pickup_items(self, x, y, description):
+        return self.map[x][y].pickup_item(description)

@@ -17,8 +17,8 @@ class MapTileTest(unittest.TestCase):
 
     def testItems(self):
         self.assertEqual([self.test_detritus.description], self.test_cave_tile.reveal_items())
-        self.assertEqual(self.test_detritus, self.test_cave_tile.pickupitem("A rock"))
-        self.assertEqual("You cannot get that.", self.test_cave_tile.pickupitem("A rock"))
+        self.assertEqual(self.test_detritus, self.test_cave_tile.pickup_item("A rock"))
+        self.assertEqual(None, self.test_cave_tile.pickup_item("A rock"))
 
     def testNPC(self):
         self.assertEqual([self.test_npc.recall_name()], self.test_cave_tile.reveal_npcs())
