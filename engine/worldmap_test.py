@@ -23,6 +23,10 @@ class WorldMapTest(unittest.TestCase):
         self.assertGreater(len(self.test_worldmap.GetNPCDescriptions(1,1)), 0)
         self.assertGreater(len(self.test_worldmap.greetnpcs(1,1)), 0)
 
+    def test_retrieve_item(self):
+        self.assertEqual(self.test_worldmap.pickup_items(1,0,self.test_detritus_description).description, self.test_detritus_description)
+        self.assertEqual(self.test_worldmap.pickup_items(1,0,self.test_detritus_description), None) 
+
 
 if __name__ == '__main__':
     unittest.main()

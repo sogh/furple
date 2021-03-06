@@ -1,6 +1,7 @@
 import unittest
 
 from engine.player import Player
+from engine.detritus import Detritus
 
 class PlayerTestCase(unittest.TestCase):
     """Tests Player class and functions."""
@@ -8,6 +9,7 @@ class PlayerTestCase(unittest.TestCase):
     def setUp(self):
         """Create a Player for use in testing."""
         self.player1 = Player()
+        self.testitem = Detritus("A ROCK")
 
     def test_move(self):
         """Test player position and movement."""
@@ -34,6 +36,13 @@ class PlayerTestCase(unittest.TestCase):
             self.player1.Update(4)
         self.assertEqual(self.player1.hunger, 4)
         self.assertEqual(self.player1.PlayerStatus(), 'You are hungry.')
+
+    def test_inventory(self):
+        """Test inventory."""
+        self.player1.add_item_to_inv(self.testitem)
+        self.assertIn(self.testitem, self.player1.inventory)
+        self.assertEqual(self.player1.display_inv(),["A ROCK"])
+
 
 
 if __name__ == '__main__':

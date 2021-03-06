@@ -50,7 +50,5 @@ class MyGameTest(unittest.TestCase):
         self.assertIn('roger', self.worldmap.GetNPCDescriptions(1,0))
         self.assertIn('bob', self.worldmap.GetNPCDescriptions(1,0))
 
-
-
 if __name__ == '__main__':
     unittest.main()
