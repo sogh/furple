@@ -43,16 +43,35 @@ class MyGame:
         self.graphics = graphics
 
 
+    def DisplayIntroMessage(self):
+        self.graphics.RenderText("******************************")
+        self.graphics.RenderText("Welcome to furple!")
+        self.graphics.RenderText("For help enter \"help\"")
+        self.graphics.RenderText("Move commands: n,s,e,w")
+        self.graphics.RenderText("******************************")
+    
+    def DisplayPlayerStatus(self):
+        self.graphics.RenderText(f"Position: {self.player1.position.toString()}")
+        self.graphics.RenderText(self.player1.PlayerStatus())
+
     def Step(self):
         # Every Loop execute one simulation tick.
         self.sim.Update()
 
         # Take player input
-        if len(self.input_queue) > 0:
+        if len(self.input_queue) == 0:
+            self.DisplayIntroMessage()
+            self.graphics.RenderText(self.sun.toString())
+            self.graphics.RenderText(self.worldmap.GetLocationDescription(self.player1.position.x, self.player1.position.y))
+            self.DisplayPlayerStatus()
+        else:
             cmd = self.input_queue.popleft()
             lowcmd = cmd.lower()
             if lowcmd in self.player_move_commands:
                 self.player1.move(lowcmd)
+                self.graphics.RenderText(self.sun.toString())
+                self.graphics.RenderText(self.worldmap.GetLocationDescription(self.player1.position.x, self.player1.position.y))
+                self.DisplayPlayerStatus()
             elif lowcmd in self.info_commands:
                 self.graphics.RenderText("All possible commands:")
                 self.graphics.RenderText(self.all_commands)
@@ -85,11 +104,7 @@ class MyGame:
             else:
                 self.graphics.RenderText(f"{cmd} is not a valid command.")
         
-        self.graphics.RenderText(f"Position: {self.player1.position.toString()}")
-        self.graphics.RenderText("Move commands: n,s,e,w")
-        self.graphics.RenderText(self.sun.toString())
-        self.graphics.RenderText(self.worldmap.GetLocationDescription(self.player1.position.x, self.player1.position.y))
-        self.graphics.RenderText(self.player1.PlayerStatus())
+
 
 
         # Render all the graphics
