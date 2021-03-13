@@ -41,4 +41,4 @@ class Player:
         self.inventory.append(new_item)
 
     def display_inv(self):
-        return [item.description for item in self.inventory]
+        return [item.get_description() for item in self.inventory]

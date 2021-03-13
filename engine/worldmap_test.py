@@ -9,7 +9,7 @@ class WorldMapTest(unittest.TestCase):
         self.test_detritus_description = "hunk o junk"
         self.test_tile = MapTile("testforest", "a test forest", MapTileTag.FOREST)
         self.test_worldmap = WorldMap(-3, -3, 3, 3)
-        self.test_worldmap.AddItemAt(1, 0, self.test_detritus_description)
+        self.test_worldmap.AddItemAt(1, 0, self.test_detritus_description, [self.test_detritus_description], True)
         self.test_worldmap.SetMapTile(0, 0, self.test_tile)
         self.test_worldmap.AddNPCAt(1, 1, 'testnpcname')
 
