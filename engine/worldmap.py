@@ -20,8 +20,8 @@ class WorldMap:
     def GetLocationDescription(self, x, y):
         return self.map[x][y].toString()
 
-    def AddItemAt(self, x, y, item_description, item_synonyms=[], item_obtainable=False):
-        self.map[x][y].add_item(Detritus(item_description.lower(), item_synonyms, item_obtainable))
+    def AddItemAt(self, x, y, item):
+        self.map[x][y].add_item(item)
     
     def GetItemDescriptions(self, x, y):
         return self.map[x][y].reveal_items()

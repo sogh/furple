@@ -42,8 +42,7 @@ class MapTile:
     def pickup_item(self, description):
         item_index = 0
         for item in self.local_items:
-            if description.lower() in item.get_synonyms():
-                if item.is_obtainable():
-                    return self.local_items.pop(item_index)
+            if item.is_obtainable() and description.lower() in item.get_synonyms():
+                return self.local_items.pop(item_index)
             item_index += 1
         return None
