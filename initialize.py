@@ -47,57 +47,20 @@ def GENERATE_PHEZYGG_WORLD():
 
 def initial_item_populate(new_world, north_limit = 1, south_limit = -1, east_limit = 1, west_limit = -1):
     possible_items = [
-        {
-            'description': 'a rock',
-            'synonyms': ['a rock', 'rock', 'the rock'],
-            'obtainable': True,
-        },
-        {
-            'description': 'a tree',
-            'synonyms': ['a tree', 'tree', 'the tree'],
-            'obtainable': False,
-        },
-        {
-            'description': 'a stream',
-            'synonyms': ['a stream', 'stream', 'the stream'],
-            'obtainable': False,
-        },
-        {
-            'description': 'a boot',
-            'synonyms': ['a boot', 'boot', 'the boot'],
-            'obtainable': True,
-        },
-        {
-            'description': 'some grass',
-            'synonyms': ['some grass', 'grass', 'the grass'],
-            'obtainable': False,
-        },
-        {
-            'description': 'some mushrooms',
-            'synonyms': ['some mushrooms', 'mushrooms', 'the mushrooms'],
-            'obtainable': True,
-        },
-        {
-            'description': 'a cloud',
-            'synonyms': ['a cloud', 'cloud', 'the cloud'],
-            'obtainable': False,
-        },
-        {
-            'description': 'crumpled paper',
-            'synonyms': ['crumpled paper', 'paper', 'the paper', 'the crumpled paper'],
-            'obtainable': True,
-        },
-        {
-            'description': 'a fallen tree limb',
-            'synonyms': ['a fallen tree limb', 'fallen tree limb', 'the fallen tree limb', 'tree limb', 'a tree limb', 'the tree limb'],
-            'obtainable': False,
-        },
+        Detritus('a rock', ['a rock', 'rock', 'the rock'], True),
+        Detritus('a tree', ['a tree', 'tree', 'the tree'], False),
+        Detritus('a stream', ['a stream', 'stream', 'the stream'], False),
+        Detritus('a boot', ['a boot', 'boot', 'the boot'], True),
+        Detritus('some grass', ['some grass', 'grass', 'the grass'], False),
+        Detritus('some mushrooms', ['some mushrooms', 'mushrooms', 'the mushrooms'], True),
+        Detritus('a cloud', ['a cloud', 'cloud', 'the cloud'], False),
+        Detritus('crumpled paper', ['crumpled paper', 'paper', 'the paper', 'the crumpled paper'], True),
+        Detritus('a fallen tree limb', ['a fallen tree limb', 'fallen tree limb', 'the fallen tree limb', 'tree limb', 'a tree limb', 'the tree limb'], False),
     ]
     max_initial_items = 7
 
     for _ in range(randint(1,max_initial_items)):
-        new_item = choice(possible_items)
-        new_world.AddItemAt(choice(list(range(west_limit, east_limit + 1))), choice(list(range(south_limit, north_limit + 1))), Detritus(description=new_item['description'], synonyms=new_item['synonyms'], obtainable=new_item['obtainable']))
+        new_world.AddItemAt(choice(list(range(west_limit, east_limit + 1))), choice(list(range(south_limit, north_limit + 1))), choice(possible_items))
 
     new_world.AddItemAt(0,0, Detritus('a key', ['key', 'a key', 'the key'], True))
     new_world.AddItemAt(1, 0, Detritus('a door', ['door', 'a door', 'the door'], False))
