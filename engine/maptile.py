@@ -28,7 +28,7 @@ class MapTile:
         self.local_items.append(new_item)
 
     def reveal_items(self):
-        return [thing.description for thing in self.local_items]
+        return [thing.get_description() for thing in self.local_items]
 
     def add_npc(self, new_npc):
         self.local_npcs.append(new_npc)
@@ -42,7 +42,7 @@ class MapTile:
     def pickup_item(self, description):
         item_index = 0
         for item in self.local_items:
-            if item.description == description:
+            if item.is_obtainable() and description.lower() in item.get_synonyms():
                 return self.local_items.pop(item_index)
             item_index += 1
         return None

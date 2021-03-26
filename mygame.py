@@ -19,11 +19,12 @@ class MyGame:
         self.nothing_commands = ['wait', 'nothing']
         self.item_commands = ['pickup', 'get', 'take']
         self.inventory_commands = ['inventory']
+        self.use_commands = ['use']
 
         self.all_commands = (self.info_commands + self.player_move_commands
             + self.fart_commands + self.quit_commands + self.look_commands 
             + self.npc_commands + self.nothing_commands + self.item_commands
-            + self.inventory_commands)
+            + self.inventory_commands + self.use_commands)
 
         self.worldmap = worldmap
         self.sim = sim
@@ -98,7 +99,16 @@ class MyGame:
                     print("You cannot get that.")
             elif lowcmd in self.inventory_commands:
                 for item in self.player1.display_inv():
-                    self.graphics.RenderText(item)              
+                    self.graphics.RenderText(item)
+            elif lowcmd in self.use_commands:
+                item_use = input("What will you use?")
+                if item_use.lower() == 'key':
+                    if 'a key' in self.player1.display_inv():
+                        item_list_local = self.worldmap.GetItemDescriptions(self.player1.position.x, self.player1.position.y)
+                        if 'a door' in item_list_local:
+                            print('Congrats you win!!')
+                            return False
+                print("You can't use that!")
             elif lowcmd in self.nothing_commands:
                 pass
             else:

@@ -6,7 +6,7 @@ from engine.detritus import Detritus
 class MapTileTest(unittest.TestCase):
     
     def setUp(self):
-        self.test_detritus = Detritus('A rock')
+        self.test_detritus = Detritus('A rock', ['a rock', 'rock', 'the rock'], True)
         self.test_npc = NPC(0,0)
         self.test_cave_tile = MapTile('cave_tile', 'cavey cave', [MapTileTag.CAVE])
         self.test_cave_tile.add_item(self.test_detritus)
@@ -16,7 +16,7 @@ class MapTileTest(unittest.TestCase):
         self.assertEqual(self.test_cave_tile.toString(), self.test_cave_tile.name + "\n" + self.test_cave_tile.description)
 
     def testItems(self):
-        self.assertEqual([self.test_detritus.description], self.test_cave_tile.reveal_items())
+        self.assertEqual([self.test_detritus.get_description()], self.test_cave_tile.reveal_items())
         self.assertEqual(self.test_detritus, self.test_cave_tile.pickup_item("A rock"))
         self.assertEqual(None, self.test_cave_tile.pickup_item("A rock"))
 
