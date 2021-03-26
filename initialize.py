@@ -1,4 +1,5 @@
 """This module initializes map, items, and npcs."""
+import copy
 from random import randint, choice
 from engine.worldmap import WorldMap
 from engine.maptile import MapTile
@@ -60,7 +61,7 @@ def initial_item_populate(new_world, north_limit = 1, south_limit = -1, east_lim
     max_initial_items = 7
 
     for _ in range(randint(1,max_initial_items)):
-        new_world.AddItemAt(choice(list(range(west_limit, east_limit + 1))), choice(list(range(south_limit, north_limit + 1))), choice(possible_items))
+        new_world.AddItemAt(choice(list(range(west_limit, east_limit + 1))), choice(list(range(south_limit, north_limit + 1))), copy.deepcopy(choice(possible_items)))
 
     new_world.AddItemAt(0,0, Detritus('a key', ['key', 'a key', 'the key'], True))
     new_world.AddItemAt(1, 0, Detritus('a door', ['door', 'a door', 'the door'], False))
