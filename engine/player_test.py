@@ -1,6 +1,6 @@
 import unittest
 
-from engine.player import Player
+from engine.player import Player, HUNGER_PHASE_DURATION
 from engine.detritus import Detritus
 
 class PlayerTestCase(unittest.TestCase):
@@ -32,8 +32,8 @@ class PlayerTestCase(unittest.TestCase):
         # Check initial hunger
         self.assertEqual(self.player1.PlayerStatus(), 'You feel content.')
         self.assertEqual(self.player1.hunger, 0)
-        for _ in range(0,4):
-            self.player1.Update(4)
+        for i in range(0,4):
+            self.player1.Update((i + 1) * HUNGER_PHASE_DURATION)
         self.assertEqual(self.player1.hunger, 4)
         self.assertEqual(self.player1.PlayerStatus(), 'You are hungry.')
 
