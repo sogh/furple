@@ -1,10 +1,14 @@
 import random, sys, initialize
 from collections import deque
+import pygame
+import pygame.time
 
 from engine.player import Player
 from engine.simulation import Simulation
 from engine.sunmoon import SunMoon
 from engine.graphics import Graphics
+
+FRAMES_PER_SECOND = 60
 
 class MyGame:
     def __init__(self, worldmap=initialize.GENERATE_PHEZYGG_WORLD(), sim=Simulation(), player1=Player(), graphics=Graphics(), sun=SunMoon()):
@@ -28,7 +32,8 @@ class MyGame:
 
         self.worldmap = worldmap
         self.sim = sim
-        print("Beginning game...")
+        pygame.init()
+        self.clock = pygame.time.Clock()
         self.player1 = player1
         self.sim.AddUpdateable(self.player1)
         self.sun = sun
@@ -39,7 +44,10 @@ class MyGame:
         # Every game loop, update our input queue to process player input.
         # In normal operation, there will only be one entry in the queue. However, this
         # enables us to insert commands in the queue for testing purposes.
-        self.input_queue = deque()
+        self.command_queue = deque()
+
+        # General Key input queue, string
+        self.keyboard_input = ""
 
         self.graphics = graphics
 
@@ -59,23 +67,20 @@ class MyGame:
         # Every Loop execute one simulation tick.
         self.sim.Update()
 
-        # Take player input
-        if len(self.input_queue) == 0:
+        # Process player command, if exists.
+        if pygame.time.get_ticks() < 30000:
             self.DisplayIntroMessage()
-            self.graphics.RenderText(self.sun.toString())
-            self.graphics.RenderText(self.worldmap.GetLocationDescription(self.player1.position.x, self.player1.position.y))
-            self.DisplayPlayerStatus()
-        else:
-            cmd = self.input_queue.popleft()
+        self.graphics.RenderText(self.sun.toString())
+        self.graphics.RenderText(self.worldmap.GetLocationDescription(self.player1.position.x, self.player1.position.y))
+        self.DisplayPlayerStatus()
+        if len(self.command_queue) > 0:
+            cmd = self.command_queue.popleft()
             lowcmd = cmd.lower()
             if lowcmd in self.player_move_commands:
                 self.player1.move(lowcmd)
-                self.graphics.RenderText(self.sun.toString())
-                self.graphics.RenderText(self.worldmap.GetLocationDescription(self.player1.position.x, self.player1.position.y))
-                self.DisplayPlayerStatus()
             elif lowcmd in self.info_commands:
                 self.graphics.RenderText("All possible commands:")
-                self.graphics.RenderText(self.all_commands)
+                self.graphics.RenderText(str(self.all_commands))
             elif lowcmd in self.fart_commands:
                 self.graphics.RenderText("You fart. It smells.")
             elif lowcmd in self.quit_commands:
@@ -114,8 +119,8 @@ class MyGame:
             else:
                 self.graphics.RenderText(f"{cmd} is not a valid command.")
         
-
-
+        self.graphics.RenderText(f"ticks: {pygame.time.get_ticks()}")
+        self.graphics.RenderPrompt("Enter Command:  ", self.keyboard_input)
 
         # Render all the graphics
         self.graphics.Render()
@@ -126,8 +131,22 @@ class MyGame:
     def Run(self):
         # Main game loop
         while self.Step():
-            self.input_queue.appendleft(input("Enter command: "))
+            # Check for Pygame/Windows level events.
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    quit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.command_queue.append(self.keyboard_input)
+                        self.keyboard_input = ""
+                    else:
+                        # A bit hacky, but might work temporarily
+                        self.keyboard_input += pygame.key.name(event.key)
 
+            
+            # Limit the game to desired FPS.
+            self.clock.tick(FRAMES_PER_SECOND)
+            
 
 if __name__ == '__main__':
     game = MyGame()

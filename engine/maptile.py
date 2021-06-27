@@ -22,7 +22,7 @@ class MapTile:
         self.local_npcs = []
 
     def toString(self):
-        return self.name + "\n" + self.description
+        return self.name + ": " + self.description
 
     def add_item(self, new_item):
         self.local_items.append(new_item)

@@ -38,7 +38,7 @@ class MyGameTest(unittest.TestCase):
         self.assertEqual(self.player.position.x, 0)
         self.assertEqual(self.player.position.y, 0)
         # Simulate input command 'e'
-        self.game.input_queue.append('e')
+        self.game.command_queue.append('e')
         # Move the game forward one step
         self.game.Step()
         # Verify player moved

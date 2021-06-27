@@ -1,19 +1,23 @@
 from engine.point import Point
 
+HUNGER_PHASE_DURATION = 10 * 60 * 1000
+
 class Player:
     def __init__(self):
         self.__position = Point(0,0)
         self.hunger = 0
         self.inventory = []
+        self.last_hunger_tick = 0
 
     @property
     def position(self):
         return self.__position
 
     def Update(self, t):
-        # Every 4 ticks, increase hunger.
-        if t % 4 == 0:
+        # Increase hunger after a while.
+        if t - self.last_hunger_tick >= HUNGER_PHASE_DURATION:
             self.hunger = self.hunger + 1
+            self.last_hunger_tick = t
     
     def PlayerStatus(self):
         if self.hunger >= 0 and self.hunger < 3:

@@ -13,7 +13,7 @@ class MapTileTest(unittest.TestCase):
         self.test_cave_tile.add_npc(self.test_npc)
 
     def testToString(self):
-        self.assertEqual(self.test_cave_tile.toString(), self.test_cave_tile.name + "\n" + self.test_cave_tile.description)
+        self.assertEqual(self.test_cave_tile.toString(), self.test_cave_tile.name + ": " + self.test_cave_tile.description)
 
     def testItems(self):
         self.assertEqual([self.test_detritus.get_description()], self.test_cave_tile.reveal_items())
